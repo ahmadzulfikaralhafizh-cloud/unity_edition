@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UnityEdition | Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0d0d0d;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* Cursor lighting (white) */
+    .cursor-light {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle 80px at var(--x) var(--y), rgba(255,255,255,0.12), transparent 70%);
+      transition: background 0.1s;
+      z-index: -1;
+    }
+
+    /* Smooth transitions */
+    .transition-all {
+      transition: all 0.3s ease;
+    }
+
+    /* Form container */
+    .card {
+      background: rgba(30, 30, 30, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Button hover */
+    .btn {
+      background-color: #fff;
+      color: #000;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #e5e5e5;
+      transform: translateY(-2px);
+    }
+
+    /* Input styling */
+    input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen relative">
+
+  <!-- Cursor light effect -->
+  <div class="cursor-light" id="cursorLight"></div>
+
+  <!-- Login Card -->
+  <div id="loginBox" class="card fade-in w-[350px] p-8 rounded-xl shadow-xl text-center">
+    <h1 class="text-3xl font-semibold mb-6 tracking-wide">UNITY Edition</h1>
+
+    <form id="loginForm" class="space-y-5">
+      <input type="text" placeholder="Email or Username" class="w-full p-3 rounded-md" required />
+      <input type="password" placeholder="Password" class="w-full p-3 rounded-md" required />
+
+      <div class="flex justify-between text-sm text-gray-400">
+        <label class="flex items-center gap-2">
+          <input type="checkbox" class="accent-white" /> Remember me
+        </label>
+        <a href="#" class="hover:text-white transition-all">Forgot?</a>
+      </div>
+
+      <button type="submit" class="btn w-full py-3 rounded-md font-semibold mt-2">Login</button>
+    </form>
+
+    <p class="text-sm text-gray-400 mt-5">
+      Don't have an account?
+      <button id="openRegister" class="text-white underline hover:text-gray-300 transition-all">Register</button>
+    </p>
+  </div>
+
+  <!-- Register Card (hidden by default) -->
+  <div id="registerBox" class="card fade-in w-[350px] p-8 rounded-xl shadow-xl text-center hidden">
+    <h1 class="text-3xl font-semibold mb-6 tracking-wide">Create Account</h1>
+
+    <form id="registerForm" class="space-y-5">
+      <input type="text" placeholder="Full Name" class="w-full p-3 rounded-md" required />
+      <input type="email" placeholder="Email" class="w-full p-3 rounded-md" required />
+      <input type="password" placeholder="Password" class="w-full p-3 rounded-md" required />
+      <input type="password" placeholder="Confirm Password" class="w-full p-3 rounded-md" required />
+
+      <button type="submit" class="btn w-full py-3 rounded-md font-semibold mt-2">Register</button>
+    </form>
+
+    <p class="text-sm text-gray-400 mt-5">
+      Already have an account?
+      <button id="backToLogin" class="text-white underline hover:text-gray-300 transition-all">Login</button>
+    </p>
+  </div>
+
+<script>
+  // Cursor light follow effect
+  const cursor = document.getElementById('cursorLight');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.setProperty('--x', e.clientX + 'px');
+    cursor.style.setProperty('--y', e.clientY + 'px');
+  });
+
+  // Register form toggle
+  const loginBox = document.getElementById('loginBox');
+  const registerBox = document.getElementById('registerBox');
+  document.getElementById('openRegister').onclick = () => {
+    loginBox.classList.add('hidden');
+    registerBox.classList.remove('hidden');
+  };
+  document.getElementById('backToLogin').onclick = () => {
+    registerBox.classList.add('hidden');
+    loginBox.classList.remove('hidden');
+  };
+
+  // === LOGIN LOGIC ===
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+
+  // Simpan data register
+  registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fullName = registerForm.querySelector('input[placeholder="Full Name"]').value;
+    const email = registerForm.querySelector('input[placeholder="Email"]').value;
+    const password = registerForm.querySelector('input[placeholder="Password"]').value;
+
+    const user = { fullName, email, password };
+    localStorage.setItem('userData', JSON.stringify(user));
+    alert('Akun berhasil dibuat! Sekarang login ya.');
+    registerBox.classList.add('hidden');
+    loginBox.classList.remove('hidden');
+  });
+
+  // Login dan arahkan ke beranda
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const inputEmail = loginForm.querySelector('input[placeholder="Email or Username"]').value;
+    const inputPass = loginForm.querySelector('input[placeholder="Password"]').value;
+
+    const userData = JSON.parse(localStorage.getItem('userData'));
+if (userData && (inputEmail === userData.email || inputEmail === userData.fullName) && inputPass === userData.password) {
+  alert('Login berhasil!');
+  
+  // Tandai login berhasil
+  localStorage.setItem('loggedIn', 'true');
+  
+  // Simpan data user lengkap
+  localStorage.setItem('userData', JSON.stringify({
+    fullName: userData.fullName,
+    email: userData.email,
+    password: userData.password
+  }));
+
+  // Simpan juga key buat dikenali di shop.html dan beranda.html
+  localStorage.setItem('unity_user_v1', userData.fullName || userData.email);
+
+  // Setelah login sukses → ke beranda
+  window.location.href = 'beranda.html';
+}
+
+
+
+  });
+</script>
+
+</body>
+</html>

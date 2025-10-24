@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unity Project — Luxury Car Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--accent:#00e5ff}
+    html{scroll-behavior:smooth}
+    body{font-family:'Poppins',sans-serif;background:#070708;color:#e6eef8}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);backdrop-filter: blur(6px)}
+    .hero-bg{position:relative; overflow:hidden}
+    .hero-bg video{position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; filter: brightness(0.6) contrast(1.1);}
+    .hero-bg::before {
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  /* Lebih gelap dan sedikit gradasi biar elegan */
+  background:linear-gradient(180deg,rgba(0,0,0,0.65),rgba(0,0,0,0.85));
+  z-index:0;
+}
+
+    .fav-btn {transition: transform .15s ease}
+    .fav-btn:hover{transform:scale(1.06)}
+    .fade-in{opacity:0; transform:translateY(12px); transition:opacity .6s ease, transform .6s ease}
+    .fade-in.visible{opacity:1; transform:none}
+    .parallax{background-attachment:fixed}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none}}
+
+    /* mobile menu */
+    .mobile-menu{display:none}
+    @media (max-width: 768px){.mobile-menu{display:block}}
+
+    /* modal backdrop */
+    .modal-backdrop{background:rgba(2,6,23,0.6)}
+  </style>
+</head>
+<body class="antialiased">
+  <!-- Navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#0b0b0b]/90 backdrop-blur-sm py-3 px-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-end">
+      <a href="#home" class="flex items-center gap-3 mr-auto">
+  <img src="../assets/img/logo.png" alt="Unity Logo" class="w-12 h-12 object-contain rounded-md">
+  <div>
+    <div class="text-white font-semibold">Unity Edition</div>
+    <div class="text-xs text-gray-400">Luxury Car Marketplace</div>
+  </div>
+</a>
+
+
+      <nav class="flex items-center gap-6 text-gray-300">
+        <a href="#catalog" class="hover:text-white">Catalog</a>
+        <a href="#favorites" class="hover:text-white">Favorites</a>
+        <a href="#contact" class="hover:text-white">Contact</a>
+        <button id="backBtn" class="px-3 py-1 bg-white/5 rounded">Back</button>
+      </nav>
+
+      <div class="flex items-center gap-3 ml-6">
+        <a href="#favorites" class="relative text-gray-300 hover:text-white">
+          <svg id="navFavIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21l-7.682-8.318a4.5 4.5 0 010-6.364z"/></svg>
+          <span id="favCount" class="absolute -top-2 -right-3 bg-[var(--accent)] text-black text-xs font-semibold px-2 py-0.5 rounded-full">0</span>
+        </a>
+
+        <!-- mobile menu button -->
+        <button id="mobileToggle" class="md:hidden text-gray-300">☰</button>
+      </div>
+    </div>
+
+    <!-- mobile menu content -->
+    <div id="mobileMenu" class="mobile-menu mt-2 max-w-7xl mx-auto px-2 hidden">
+      <div class="flex flex-col gap-2 text-gray-300">
+        <a href="#catalog">Catalog</a>
+        <a href="#favorites">Favorites</a>
+        <a href="#contact">Contact</a>
+        <button id="backBtnMobile" class="text-left">Back</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero with video background -->
+  <section id="home" class="hero-bg parallax h-screen flex items-center justify-center text-center px-6 relative z-10">
+    <video autoplay muted loop playsinline>
+      <source src="../assets/video/backgroundshop.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="max-w-4xl relative z-20">
+      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">Unity Edition</h1>
+      <p class="mt-4 text-gray-300 max-w-2xl mx-auto">Temukan mobil mewah pilihan dari brand terbaik dunia. Pilih, simpan favorit, dan hubungi penjual dengan mudah.</p>
+      <div class="mt-8 flex justify-center gap-4">
+        <a href="#catalog" class="px-6 py-3 bg-[var(--accent)] text-black font-semibold rounded shadow hover:opacity-95">Lihat Catalog</a>
+        <a href="#favorites" class="px-6 py-3 border border-white/10 rounded text-white">Favoritmu</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-4 pt-28 pb-20">
+
+    <!-- Controls: filters + search -->
+    <section id="catalog" class="mb-8">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+        <div class="flex items-center gap-3">
+          <label class="text-sm text-gray-400">Brand</label>
+          <select id="filterBrand" class="p-2 rounded bg-[#0b0b0b] border border-white/6">
+            <option value="all">All</option>
+            <option>BMW</option>
+            <option>Ferrari</option>
+            <option>McLaren</option>
+            <option>Porsche</option>
+            <option>Mercedes</option>
+            <option>Lamborghini</option>
+          </select>
+
+          <label class="text-sm text-gray-400">Price</label>
+          <select id="filterPrice" class="p-2 rounded bg-[#0b0b0b] border border-white/6">
+            <option value="all">All</option>
+            <option value="0-100000">Under $100k</option>
+            <option value="100000-250000">$100k - $250k</option>
+            <option value="250000-9999999">Above $250k</option>
+          </select>
+
+          <input id="searchInput" placeholder="Search model..." class="ml-3 p-2 rounded bg-[#0b0b0b] border border-white/6" />
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="clearFilters" class="px-3 py-2 bg-white/5 rounded">Clear</button>
+          <div class="text-sm text-gray-400">Logged as: <span id="currentUser">Guest</span></div>
+        </div>
+      </div>
+
+      <h2 class="text-3xl font-semibold mb-4">Catalog</h2>
+
+      <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- cards injected by JS -->
+      </div>
+    </section>
+
+    <!-- Favorites -->
+    <section id="favorites" class="mb-12">
+      <h2 class="text-3xl font-semibold mb-4">Favorites</h2>
+      <div id="favoritesList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <!-- favs injected -->
+      </div>
+      <div class="mt-4 text-sm text-gray-400">Favorites disimpan per akun (localStorage).</div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="mb-16 glass p-6 rounded-lg">
+      <h2 class="text-2xl font-semibold mb-4">Contact</h2>
+      <p class="text-gray-300">Butuh bantuan atau tertarik menjual mobil melalui Unity Project? Hubungi kami.</p>
+      <div class="mt-4 flex flex-col md:flex-row gap-6">
+        <div class="flex-1">
+          <p class="text-sm text-gray-400">Email</p>
+          <a href="mailto:hello@unityproject.com" class="text-white">hello@unityproject.com</a>
+        </div>
+        <div class="flex-1">
+          <p class="text-sm text-gray-400">Phone</p>
+          <div class="text-white">+62 812 3456 7890</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="relative bg-[#070707] border-t border-white/6 py-8">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
+    <div>
+      <div class="text-xl font-semibold">Unity Project</div>
+      <div class="text-sm text-gray-400 mt-2">Marketplace mobil mewah — curated listings, safe transactions, global reach.</div>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">Quick Links</div>
+      <ul class="text-gray-400 text-sm space-y-1">
+        <li><a href="#catalog" class="hover:text-white">Catalog</a></li>
+        <li><a href="#favorites" class="hover:text-white">Favorites</a></li>
+        <li><a href="#contact" class="hover:text-white">Contact</a></li>
+      </ul>
+    </div>
+    <div class="md:ml-4">
+      <div class="font-semibold mb-2">Follow Us</div>
+      <div class="flex gap-3">
+        <a href="#" class="text-gray-400 hover:text-white">Instagram</a>
+        <a href="#" class="text-gray-400 hover:text-white">LinkedIn</a>
+        <a href="#" class="text-gray-400 hover:text-white">X</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- logo custom -->
+  <div class="absolute bottom-6 right-10">
+    <img src="../assets/img/logo.png" alt="Logo" class="w-48 h-48 object-contain">
+  </div>
+
+  <div class="mt-6 text-center text-gray-500 text-sm">© <span id="year"></span> Unity Project — All rights reserved.</div>
+</footer>
+
+  <!-- Modals: login + detail -->
+  <div id="modalContainer" class="fixed inset-0 z-60 hidden items-center justify-center modal-backdrop">
+    <!-- content injected -->
+  </div>
+
+  <script>
+    // YEAR
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Sample catalog data
+    const CATALOG = [
+      {id:'bmw-m4',brand:'BMW',title:'BMW M4',price:89000,img:'../assets/img/bmwm4.jpg',meta:'2021 · 4.4L'},
+      {id:'bmw-i8',brand:'BMW',title:'BMW i8',price:140000,img:'../assets/img/bmwi8.jpg',meta:'2019 · Hybrid'},
+      {id:'ferrari-f8',brand:'Ferrari',title:'Ferrari F8',price:320000,img:'../assets/img/ferarrif8.jpg',meta:'2020 · V8'},
+      {id:'ferrari-488',brand:'Ferrari',title:'Ferrari 488',price:280000,img:'../assets/img/ferrari488.jpg',meta:'2018 · V8'},
+      {id:'mclaren-720s',brand:'McLaren',title:'McLaren 720S',price:299000,img:'../assets/img/mclaren720s.jpg',meta:'2019 · V8'},
+      {id:'mclaren-gt',brand:'McLaren',title:'McLaren GT',price:210000,img:'../assets/img/mclarengt.jpg',meta:'2021 · V8'},
+      {id:'porsche-911',brand:'Porsche',title:'Porsche 911',price:120000,img:'../assets/img/porsche911.jpg',meta:'2020 · 3.0L'},
+      {id:'porsche-taycan',brand:'Porsche',title:'Porsche Taycan',price:150000,img:'../assets/img/porschetaycon.jpg',meta:'2021 · Electric'},
+      {id:'mercedes-amg',brand:'Mercedes',title:'Mercedes AMG GT',price:135000,img:'../assets/img/mercedesamg.jpg',meta:'2019 · V8'},
+      {id:'mercedes-s',brand:'Mercedes',title:'Mercedes S-Class',price:110000,img:'../assets/img/mercedess.jpg',meta:'2020 · 3.0L'},
+      {id:'lamborghini-huracan',brand:'Lamborghini',title:'Lamborghini Huracan',price:210000,img:'../assets/img/lamborghinihuracan.jpg',meta:'2021 · V10'},
+      {id:'lamborghini-aventador',brand:'Lamborghini',title:'Lamborghini Aventador',price:430000,img:'../assets/img/lamborghiniaventador.jpg',meta:'2018 · V12'},
+    ];
+
+    const catalogGrid = document.getElementById('catalogGrid');
+    const favCountEl = document.getElementById('favCount');
+    const favoritesListEl = document.getElementById('favoritesList');
+    const modalContainer = document.getElementById('modalContainer');
+    const filterBrand = document.getElementById('filterBrand');
+    const filterPrice = document.getElementById('filterPrice');
+    const searchInput = document.getElementById('searchInput');
+    const clearFilters = document.getElementById('clearFilters');
+    const currentUserEl = document.getElementById('currentUser');
+
+    // IntersectionObserver for fade-in (declare early to avoid temporal dead zone)
+    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target) } }) },{threshold:0.12});
+
+    // User & favorites keys
+    const USER_KEY = 'unity_user_v1';
+    function userKey(name){ return `unity_favs_${name}` }
+
+    function getCurrentUser(){ return localStorage.getItem(USER_KEY) || null }
+    function setCurrentUser(u){ if(u) localStorage.setItem(USER_KEY,u); else localStorage.removeItem(USER_KEY); updateUserUI(); }
+
+    function loadFavorites(){
+      const u = getCurrentUser(); if(!u) return []; try{ return JSON.parse(localStorage.getItem(userKey(u)) || '[]') }catch(e){return []}
+    }
+    function saveFavorites(arr){ const u = getCurrentUser(); if(!u) return; localStorage.setItem(userKey(u), JSON.stringify(arr)); }
+
+    function updateFavCount(){ const u = getCurrentUser(); if(!u){ favCountEl.textContent = '0'; return } const favs = loadFavorites(); favCountEl.textContent = favs.length; }
+
+    function updateUserUI(){ const u = getCurrentUser(); currentUserEl.textContent = u || 'Guest'; updateFavCount(); renderFavorites(); }
+
+    // Render catalog items
+    function renderCatalog(items){ catalogGrid.innerHTML = ''; items.forEach(item=>{ const card = document.createElement('div'); card.className='p-4 border border-white/6 rounded glass fade-in'; card.dataset.brand=item.brand; card.dataset.price=item.price; card.dataset.title=item.title; card.innerHTML = `
+        <img src="${item.img}" alt="${item.title}" class="w-full h-44 object-cover rounded">
+        <div class="mt-3 flex justify-between items-start">
+          <div>
+            <div class="font-semibold">${escapeHtml(item.title)}</div>
+            <div class="        <img src="${item.img}" alt="${item.title}" class="w-full h-44 object-cover rounded">
+        <div class="mt-3 flex justify-between items-start">
+          <div>
+            <div class="font-semibold">${escapeHtml(item.title)}</div>
+            <div class="text-sm text-gray-400">${escapeHtml(item.meta)} · <span class="text-xs text-gray-400">${escapeHtml(item.brand)}</span></div>
+          </div>
+          <div class="text-lg font-bold">$${numberWithCommas(item.price)}</div>
+        </div>
+        <div class="mt-3 flex items-center gap-2">
+          <button data-id="${item.id}" class="add-fav px-3 py-2 rounded bg-white/5">Add Favorite</button>
+          <button data-id="${item.id}" class="view-detail px-3 py-2 rounded border border-white/6">Detail</button>
+        </div>
+      `;
+      catalogGrid.appendChild(card);
+    });
+    // observe fade-ins using io (which is already declared)
+    document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
+  }
+
+  // Helpers
+  function escapeHtml(str){ return String(str).replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]}); }
+  function numberWithCommas(x){ return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  // Initial render (after io defined)
+  renderCatalog(CATALOG);
+
+  // Filter logic
+  function applyFilters(){
+    const brand = filterBrand.value;
+    const price = filterPrice.value;
+    const query = searchInput.value.trim().toLowerCase();
+    const cards = Array.from(catalogGrid.children);
+    cards.forEach(card=>{
+      const b = card.dataset.brand;
+      const p = Number(card.dataset.price);
+      const t = card.dataset.title.toLowerCase();
+      let visible = true;
+      if(brand !== 'all' && b !== brand) visible = false;
+      if(price !== 'all'){
+        const [min,max] = price.split('-').map(Number);
+        if(!(p >= min && p <= max)) visible = false;
+      }
+      if(query && !t.includes(query)) visible = false;
+      card.style.display = visible ? '' : 'none';
+    });
+  }
+
+  filterBrand.addEventListener('change', applyFilters);
+  filterPrice.addEventListener('change', applyFilters);
+  searchInput.addEventListener('input', ()=>{ setTimeout(applyFilters,150) });
+  clearFilters.addEventListener('click', ()=>{ filterBrand.value='all'; filterPrice.value='all'; searchInput.value=''; applyFilters(); });
+
+  // Favorites actions (require login)
+  function ensureLoggedIn(action){ const u = getCurrentUser(); if(!u){ openLoginModal(action); return false } return true }
+
+  document.addEventListener('click', (e)=>{
+    if(e.target.matches('.add-fav')){
+      const id = e.target.dataset.id; if(!ensureLoggedIn()) return;
+      let favs = loadFavorites(); const exists = favs.find(f=>f.id===id);
+      if(exists){ // remove
+        favs = favs.filter(f=>f.id!==id); saveFavorites(favs); e.target.textContent='Add Favorite';
+      } else {
+        const item = CATALOG.find(c=>c.id===id); favs.push({id:item.id,title:item.title,meta:item.meta,brand:item.brand,price:item.price}); saveFavorites(favs); e.target.textContent='Added';
+      }
+      updateFavCount(); renderFavorites();
+    }
+
+    if(e.target.matches('.view-detail')){
+      const id = e.target.dataset.id; openDetailModal(id);
+    }
+
+    if(e.target.matches('.remove-fav')){
+      const id = e.target.dataset.id; let favs = loadFavorites().filter(f=>f.id!==id); saveFavorites(favs); renderFavorites(); updateFavCount();
+    }
+  });
+
+  // Render favorites list
+  function renderFavorites(){ const list = loadFavorites(); favoritesListEl.innerHTML=''; if(list.length===0){ favoritesListEl.innerHTML='<div class="text-gray-400">Belum ada favorit. Tambahkan mobil dari catalog.</div>'; return } list.forEach(item=>{ const el = document.createElement('div'); el.className='p-4 border border-white/6 rounded glass'; el.innerHTML=`<div class="flex justify-between items-start"><div><div class="font-semibold">${escapeHtml(item.title)}</div><div class="text-sm text-gray-400">${escapeHtml(item.brand)} · ${escapeHtml(item.meta)}</div></div><div class="flex gap-2 items-start"><div class="font-bold">$${numberWithCommas(item.price)}</div><button class="remove-fav text-sm text-red-400" data-id="${escapeHtml(item.id)}">Remove</button></div></div>`; favoritesListEl.appendChild(el); }) }
+
+  // Modal system
+  function openModal(html){ modalContainer.innerHTML = `<div class="fixed inset-0 flex items-center justify-center modal-backdrop"><div class="bg-[#071021] max-w-xl w-full p-6 rounded-lg glass">${html}<div class="mt-4 text-right"><button id="closeModal" class="px-4 py-2 bg-white/5 rounded">Close</button></div></div></div>`; modalContainer.classList.remove('hidden'); document.getElementById('closeModal').addEventListener('click', closeModal); }
+  function closeModal(){ modalContainer.classList.add('hidden'); modalContainer.innerHTML=''; }
+
+  // Detail modal
+  function openDetailModal(id){ const item = CATALOG.find(c=>c.id===id); if(!item) return; const html = `
+    <div>
+      <img src="${item.img}" alt="${item.title}" class="w-full h-56 object-cover rounded">
+      <h3 class="text-xl font-semibold mt-4">${escapeHtml(item.title)}</h3>
+      <div class="text-sm text-gray-400 mt-1">${escapeHtml(item.brand)} · ${escapeHtml(item.meta)}</div>
+      <div class="mt-3 text-lg font-bold">$${numberWithCommas(item.price)}</div>
+      <p class="mt-3 text-gray-300">${escapeHtml(item.desc || 'Belum ada deskripsi untuk mobil ini.')}</p>
+      <div class="mt-4 flex gap-3">
+        <button id="detailFavBtn" class="px-4 py-2 rounded bg-[var(--accent)] text-black font-semibold">Add to Favorites</button>
+        <a href="mailto:hello@unityproject.com?subject=Inquiry%20${encodeURIComponent(item.title)}" class="px-4 py-2 rounded border border-white/6">Contact Seller</a>
+      </div>
+    </div>
+  `; openModal(html); document.getElementById('detailFavBtn').addEventListener('click', ()=>{ document.querySelector(`.add-fav[data-id='${id}']`)?.click(); }); }
+
+  // Login modal & logic
+  function openLoginModal(afterAction=null){ const html = `
+    <div>
+      <h3 class="text-xl font-semibold">Login / Switch User</h3>
+      <p class="text-sm text-gray-400 mt-2">Masukkan username sederhana untuk demo. Favorit akan disimpan per username.</p>
+      <div class="mt-4">
+        <input id="loginInput" placeholder="Username" class="w-full p-3 rounded bg-[#071018] border border-white/6" />
+      </div>
+      <div class="mt-4 flex gap-3">
+        <button id="doLogin" class="px-4 py-2 bg-[var(--accent)] text-black rounded">Login</button>
+        <button id="logoutBtn" class="px-4 py-2 bg-white/5 rounded">Logout</button>
+      </div>
+    </div>
+  `; openModal(html);
+    document.getElementById('doLogin').addEventListener('click', ()=>{
+      const v = document.getElementById('loginInput').value.trim(); if(!v) return alert('Masukkan username'); setCurrentUser(v); closeModal(); if(typeof afterAction==='function') afterAction();
+    });
+    document.getElementById('logoutBtn').addEventListener('click', ()=>{ setCurrentUser(null); closeModal(); });
+  }
+
+  // Mobile menu toggle
+  const mobileToggle = document.getElementById('mobileToggle'); const mobileMenu = document.getElementById('mobileMenu'); mobileToggle.addEventListener('click', ()=> mobileMenu.classList.toggle('hidden'));
+  document.getElementById('backBtn').addEventListener('click', ()=> window.history.back());
+  document.getElementById('backBtnMobile').addEventListener('click', ()=> window.history.back());
+
+  // Parallax effect (simple)
+  window.addEventListener('scroll', ()=>{
+    const hero = document.querySelector('.hero-bg'); if(!hero) return; const sc = window.scrollY; hero.style.backgroundPosition = `center ${Math.max(-20, -sc/6)}px`;
+  });
+
+  // Init user state
+  updateUserUI();
+
+  // Responsive: re-render catalog on resize to ensure layout stable
+  window.addEventListener('resize', ()=> renderCatalog(CATALOG));
+
+  </script>
+</body>
+</html>

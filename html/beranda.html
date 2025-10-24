@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unity Edition | Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0d0d0d;
+      color: #fff;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    .nav-shadow { box-shadow: 0 2px 10px rgba(255,255,255,0.05); }
+    .footer {
+      background-color: #101010;
+      color: #aaa;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 40px 0;
+    }
+    .footer a { color: #ccc; transition: color 0.3s; }
+    .footer a:hover { color: #fff; }
+
+    /* Fade-in on scroll */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Search box */
+    #searchInput {
+      background: transparent;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 5px 10px;
+      color: white;
+      width: 160px;
+      display: none;
+    }
+    #searchInput:focus {
+      outline: none;
+      border-color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="fixed top-0 left-0 w-full bg-[#0f0f0f]/90 backdrop-blur-md nav-shadow z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+      <!-- Logo + Name -->
+      <div class="flex items-center gap-3">
+        <img src=../assets/img/logo.png alt="Logo" class="w-12 h-12 rounded-md">
+<h1 class="text-lg font-semibold tracking-wide">Unity Edition</h1>
+
+
+      </div>
+
+      <!-- Right Menu -->
+      <nav class="flex items-center gap-6 text-sm">
+        <a href="#cars" class="hover:text-gray-300 transition">Cars</a>
+        <a href="shop.html" class="hover:text-gray-300 transition">Shop</a>
+
+        <!-- Language switcher -->
+        <div class="flex items-center gap-2">
+          <i data-lucide="globe" class="w-4 h-4 text-white"></i>
+          <select id="langSelect" class="bg-transparent border border-gray-600 rounded px-2 py-1 text-sm text-white hover:border-white transition">
+            <option value="en">EN</option>
+            <option value="id">ID</option>
+          </select>
+        </div>
+
+        <!-- Search -->
+        <div class="flex items-center gap-2">
+          <i id="searchIcon" data-lucide="search" class="w-5 h-5 cursor-pointer hover:text-gray-300"></i>
+          <input id="searchInput" type="text" placeholder="Search..." />
+        </div>
+
+        <!-- Profile -->
+        <div id="profileBtn" class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
+  <span id="profileInitial" class="text-black font-semibold">P</span>
+</div>
+
+
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+ <!-- Hero Section -->
+<section class="relative h-screen flex flex-col items-center justify-center text-center overflow-hidden">
+  <section class="relative w-full h-screen overflow-hidden">
+  <!-- Video Background -->
+  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover brightness-50">
+    <source src="../assets/video/backgorundberanda.mp4" type="video/mp4">
+    Browser kamu tidak mendukung video tag.
+  </video>
+
+  <!-- Konten di atas video -->
+  <div class="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
+    <h1 id="heroTitle" class="text-4xl font-bold mb-3">Selamat Datang di Unity Edition</h1>
+    <p id="heroSubtitle" class="max-w-xl">Jelajahi inovasi dan desain otomotif dengan gaya elegan.</p>
+  </div>
+</section>
+
+
+  <!-- Optional overlay gradient biar makin dark -->
+  <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/80 z-[5]"></div>
+</section>
+
+
+  <!-- Cars Section -->
+  <section id="cars" class="max-w-6xl mx-auto py-20 px-5 text-center fade-up">
+    <h2 id="carsTitle" class="text-3xl font-semibold mb-5">Featured Cars</h2>
+    <p id="carsDesc" class="text-gray-400 mb-10">
+      Discover our top car selections crafted for true enthusiasts.
+    </p>
+    <div id="carsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="car-card bg-[#1a1a1a] p-5 rounded-lg hover:scale-105 transition-all">
+        <img src="../assets/img/bugattiber.jpg" alt="Car" class="w-full aspect-[21/9] object-cover rounded-2xl">
+        <h3 class="font-semibold">Bugatti La Voiture Noire</h3>
+        <p class="text-gray-400 text-sm">Timeless performance meets elegance.</p>
+      </div>
+      <div class="car-card bg-[#1a1a1a] p-5 rounded-lg hover:scale-105 transition-all">
+        <img src="../assets/img/koenigseggber.jpg" alt="Car" class="w-full aspect-[21/9] object-cover rounded-2xl">
+        <h3 class="font-semibold">Koenigsegg Jetsko</h3>
+        <p class="text-gray-400 text-sm">Pure aerodynamic perfection.</p>
+      </div>
+      <div class="car-card bg-[#1a1a1a] p-5 rounded-lg hover:scale-105 transition-all">
+        <img src="../assets/img/lamborghiniber.jpg" alt="Car" class="w-full aspect-[21/9] object-cover rounded-2xl">
+        <h3 class="font-semibold">Lamborghini Aventador</h3>
+        <p class="text-gray-400 text-sm">The soul of racing, refined.</p>
+      </div>
+    </div>
+  <a href="index.html" class="mt-10 inline-block bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-200 transition">
+  Explore Cars
+</a>
+
+  </section>
+
+  <!-- Shop Section -->
+  <section id="shop" class="bg-[#101010] py-20 text-center fade-up">
+    <h2 id="shopTitle" class="text-3xl font-semibold mb-5">Shop Collection</h2>
+    <p id="shopDesc" class="text-gray-400 max-w-xl mx-auto">
+      Browse official Unity Edition exclusive cars, exclusive accessories, and more.
+    </p>
+    <div id="shopItems" class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto mt-10">
+      <div class="shop-item bg-[#1a1a1a] p-5 rounded-lg hover:scale-105 transition-all">
+        <img src="..//assets/img/astonshop.jpg" alt="Product" class="w-full aspect-[21/9] object-cover rounded-2xl">
+        <h3 class="font-semibold">Aston Martin DBS</h3>
+        <p class="text-gray-400 text-sm">High-quality comfort with minimalist style.</p>
+      </div>
+      <div class="shop-item bg-[#1a1a1a] p-5 rounded-lg hover:scale-105 transition-all">
+        <img src="..//assets/img/ferarrishop.jpg" alt="Product" class="w-full aspect-[21/9] object-cover rounded-2xl">
+        <h3 class="font-semibold">Pagani Huayra</h3>
+        <p class="text-gray-400 text-sm">Simple, bold, and iconic.</p>
+      </div>
+      <div class="shop-item bg-[#1a1a1a] p-5 rounded-lg hover:scale-105 transition-all">
+        <img src="..//assets/img/fordshop.jpg" alt="Product" class="w-full aspect-[21/9] object-cover rounded-2xl">
+        <h3 class="font-semibold">Ford GT</h3>
+        <p class="text-gray-400 text-sm">Effortless comfort and modern appeal.</p>
+      </div>
+    </div>
+<a href="shop.html" class="mt-10 inline-block bg-white text-black px-6 py-3 rounded-md font-semibold hover:bg-gray-200 transition">
+  Explore Shop
+</a>
+
+  </section>
+
+<footer class="footer mt-20 fade-up relative">
+  <div class="max-w-6xl mx-auto px-5 grid sm:grid-cols-3 gap-10 text-sm items-start">
+    <!-- Kiri -->
+    <div class="flex flex-col items-start">
+      <h3 class="text-white font-semibold mb-3">Unity Edition</h3>
+      <p>Innovation, precision, and art — redefining automotive design for a new generation.</p>
+    </div>
+
+    <!-- Tengah -->
+    <div class="flex flex-col items-start">
+      <h3 class="text-white font-semibold mb-3">Contact</h3>
+      <p>Email: info@unityedition.com</p>
+      <p>Phone: +62 812-3456-7890</p>
+    </div>
+
+    <!-- Kanan -->
+    <div class="flex justify-end items-center">
+      <img src="../assets/img/logo.png" alt="Logo" class="w-48 h-48 object-contain">
+    </div>
+  </div>
+
+  <div class="border-t border-gray-700 mt-10 pt-5 text-center text-xs text-gray-500">
+    © 2025 Unity Edition. All rights reserved.
+  </div>
+</footer>
+
+
+
+  <script>
+  lucide.createIcons();
+
+  // === Show/hide search box ===
+  const searchIcon = document.getElementById("searchIcon");
+  const searchInput = document.getElementById("searchInput");
+  searchIcon.addEventListener("click", () => {
+    searchInput.style.display = searchInput.style.display === "block" ? "none" : "block";
+    searchInput.focus();
+  });
+
+  // === Search functionality (Cars & Shop) ===
+  searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.toLowerCase();
+    const carCards = document.querySelectorAll(".car-card");
+    const shopItems = document.querySelectorAll(".shop-item");
+
+    [...carCards, ...shopItems].forEach(el => {
+      const text = el.textContent.toLowerCase();
+      el.style.display = text.includes(keyword) ? "block" : "none";
+    });
+  });
+
+  // === Fade-in on scroll ===
+  const fadeElements = document.querySelectorAll(".fade-up");
+  const onScroll = () => {
+    fadeElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) el.classList.add("show");
+    });
+  };
+  window.addEventListener("scroll", onScroll);
+  onScroll();
+
+  // === Language switch ===
+  const langData = {
+    en: {
+      heroTitle: "Welcome to Unity Edition",
+      heroSubtitle: "Explore innovation and design perfection in every automotive detail.",
+      carsTitle: "Featured Cars",
+      carsDesc: "Discover our top car selections crafted for true enthusiasts.",
+      shopTitle: "Shop Collection",
+      shopDesc: "Browse official Unity Edition merchandise, exclusive accessories, and more."
+    },
+    id: {
+      heroTitle: "Selamat Datang di Unity Edition",
+      heroSubtitle: "Jelajahi inovasi dan kesempurnaan desain di setiap detail otomotif.",
+      carsTitle: "Mobil Unggulan",
+      carsDesc: "Temukan pilihan mobil terbaik kami untuk para pecinta otomotif sejati.",
+      shopTitle: "Koleksi Toko",
+      shopDesc: "Lihat merchandise resmi Unity Edition, aksesori eksklusif, dan lainnya."
+    }
+  };
+
+  const langSelect = document.getElementById("langSelect");
+  langSelect.addEventListener("change", () => {
+    const lang = langSelect.value;
+    document.getElementById("heroTitle").textContent = langData[lang].heroTitle;
+    document.getElementById("heroSubtitle").textContent = langData[lang].heroSubtitle;
+    document.getElementById("carsTitle").textContent = langData[lang].carsTitle;
+    document.getElementById("carsDesc").textContent = langData[lang].carsDesc;
+    document.getElementById("shopTitle").textContent = langData[lang].shopTitle;
+    document.getElementById("shopDesc").textContent = langData[lang].shopDesc;
+  });
+
+  // === CEK LOGIN DULU ===
+  if (localStorage.getItem('loggedIn') !== 'true') {
+    window.location.href = 'login.html';
+  }
+
+  // === GANTI INISIAL PROFIL DARI NAMA USER ===
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  if (userData && document.getElementById("profileInitial")) {
+    document.getElementById("profileInitial").textContent = userData.fullName.charAt(0).toUpperCase();
+  }
+
+  // === KLIK LOGO "P" KE PROFIL ===
+  const profileBtn = document.getElementById("profileBtn");
+  if (profileBtn) {
+    profileBtn.addEventListener("click", () => {
+      window.location.href = "profile.html";
+    });
+  }
+</script>
+
+</body>
+</html>

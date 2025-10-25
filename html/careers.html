@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Careers | UNITYEdition</title>
+
+<!-- FONT & SMOOTH SCROLL LIBRARY -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.37/dist/lenis.min.js"></script>
+
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --panel: rgba(25, 25, 25, 0.7);
+    --text: #eaeaea;
+    --muted: #bfbfbf;
+    --border: rgba(255, 255, 255, 0.08);
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    background: radial-gradient(circle at 20% 20%, #111, #000);
+    scroll-behavior: smooth;
+  }
+
+  /* BACK BUTTON */
+  .back-arrow {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: 0.3s;
+    z-index: 50;
+  }
+  .back-arrow:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  }
+
+  /* HERO SECTION */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #fff;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 650px;
+  }
+
+  .hero .btn {
+    margin-top: 40px;
+    background: linear-gradient(90deg, #fff, #ccc);
+    color: #000;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .hero .btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(255,255,255,0.25);
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 25px 120px;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #fff;
+    margin-bottom: 50px;
+    position: relative;
+  }
+
+  .section-title::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background: #fff;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    border-radius: 5px;
+  }
+
+  /* PEOPLE GRID */
+  .people-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    text-align: center;
+  }
+
+  .person {
+    background: var(--panel);
+    padding: 28px 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+  }
+
+  .person:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.08);
+  }
+
+  .person .name {
+    color: #fff;
+    font-weight: 600;
+    margin-top: 10px;
+    font-size: 1.1rem;
+  }
+
+  .person .role {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* JOB GRID */
+  .job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+  }
+
+  .job-card {
+    background: var(--panel);
+    border-radius: 16px;
+    padding: 25px 30px;
+    border: 1px solid var(--border);
+    transition: 0.4s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .job-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 35px rgba(255,255,255,0.12);
+  }
+
+  .job-card h3 {
+    color: #fff;
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+  }
+
+  .job-card p {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .job-meta {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .apply-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .apply-btns a {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 0;
+    border-radius: 10px;
+    transition: 0.3s;
+  }
+
+  .apply-btns .primary {
+    background: linear-gradient(90deg, #fff, #ccc);
+    color: #000;
+  }
+  .apply-btns .primary:hover {
+    box-shadow: 0 0 20px rgba(255,255,255,0.25);
+    transform: scale(1.03);
+  }
+
+  .apply-btns .outline {
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+  }
+  .apply-btns .outline:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  footer {
+    text-align: center;
+    padding: 60px 20px;
+    color: #aaa;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-arrow">←</a>
+
+<section class="hero">
+  <h1>Join the Team at UNITYEdition</h1>
+  <p>Bergabunglah dengan tim kami untuk membangun pengalaman digital yang bermakna dan inovatif.</p>
+  <a href="#people" class="btn">Kenali Tim Kami</a>
+</section>
+
+<!-- OUR PEOPLE -->
+<section class="content" id="people">
+  <h2 class="section-title">Our People</h2>
+  <div class="people-grid">
+    <div class="person"><div class="name">Andini Nina Apsari</div><div class="role">UI/UX Designer</div></div>
+    <div class="person"><div class="name">Ahmad Zulfikar A.</div><div class="role">Programmer</div></div>
+    <div class="person"><div class="name">Zahratun Nisa</div><div class="role">UI/UX Designer</div></div>
+    <div class="person"><div class="name">Zidan Arul Dewangga</div><div class="role">Programmer</div></div>
+    <div class="person"><div class="name">Zahra Naylatusyifa</div><div class="role">UI/UX Designer</div></div>
+    <div class="person"><div class="name">Abdullah Hafidz A.</div><div class="role">Programmer</div></div>
+  </div>
+</section>
+
+<!-- OPEN POSITIONS -->
+<section class="content" id="openings">
+  <h2 class="section-title">Open Positions</h2>
+  <div class="job-grid">
+
+    <div class="job-card">
+      <h3>Frontend Engineer</h3>
+      <div class="job-meta">Full-time · Remote</div>
+      <p>Membangun antarmuka pengguna yang cepat, modern, dan responsif menggunakan framework modern seperti React atau Vue.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Frontend%20Engineer" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Frontend%20Engineer" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>Backend Developer</h3>
+      <div class="job-meta">Full-time · Hybrid</div>
+      <p>Merancang API, database, dan sistem keamanan dengan Node.js atau Laravel untuk mendukung proyek Unity-Project.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Backend%20Developer" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Backend%20Developer" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>Full Stack Developer</h3>
+      <div class="job-meta">Full-time · Remote</div>
+      <p>Mengembangkan fitur dari frontend hingga backend untuk proyek web inovatif dengan performa tinggi.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Full%20Stack%20Developer" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Full%20Stack%20Developer" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>UI/UX Designer</h3>
+      <div class="job-meta">Full-time · Remote</div>
+      <p>Merancang pengalaman pengguna yang halus dan estetika khas Unity-Project untuk web dan mobile.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20UIUX%20Designer" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20UIUX%20Designer" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>Graphic Designer</h3>
+      <div class="job-meta">Part-time · Remote</div>
+      <p>Membuat desain visual, logo, dan materi promosi digital dengan gaya minimalis modern.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Graphic%20Designer" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Graphic%20Designer" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>Mobile App Developer</h3>
+      <div class="job-meta">Full-time · Remote</div>
+      <p>Mengembangkan aplikasi mobile Android dan iOS dengan Flutter atau React Native.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Mobile%20App%20Developer" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Mobile%20App%20Developer" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>Project Manager</h3>
+      <div class="job-meta">Full-time · Onsite / Hybrid</div>
+      <p>Mengelola timeline, komunikasi tim, dan memastikan seluruh proyek berjalan sesuai rencana.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Project%20Manager" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Project%20Manager" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>Quality Assurance (QA) Engineer</h3>
+      <div class="job-meta">Full-time · Remote</div>
+      <p>Menguji fungsionalitas sistem, menemukan bug, dan memastikan produk bekerja tanpa error.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20QA%20Engineer" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20QA%20Engineer" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>Content Writer</h3>
+      <div class="job-meta">Part-time · Remote</div>
+      <p>Menulis artikel dan konten menarik yang menggambarkan nilai dan budaya Unity-Project.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Content%20Writer" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Content%20Writer" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>Customer Support Specialist</h3>
+      <div class="job-meta">Full-time · Remote</div>
+      <p>Memberikan dukungan kepada pengguna, menjawab pertanyaan, dan membantu menyelesaikan kendala teknis.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Customer%20Support%20Specialist" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Customer%20Support%20Specialist" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <h3>Marketing Strategist</h3>
+      <div class="job-meta">Full-time · Remote</div>
+      <p>Menyusun strategi promosi digital, analisis pasar, dan branding online untuk meningkatkan awareness Unity-Project.</p>
+      <div class="apply-btns">
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Marketing%20Strategist" class="outline">Email</a>
+        <a href="mailto:unityprojectsmn@gmail.com?subject=Apply%20-%20Marketing%20Strategist" class="primary">Quick Apply</a>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="text-align:center; margin-top:40px; color:var(--muted);">
+    Tidak menemukan posisi yang cocok? Kirimkan lamaran terbuka Anda ke 
+    <a href="mailto:unityprojectsmn@gmail.com" style="color:#fff;text-decoration:underline;">unityprojectsmn@gmail.com</a>
+  </p>
+</section>
+
+
+<footer>
+  &copy; © 2025 UNITYEdition | <a href="allbrands.html">All Brands</a> • <a href="contact.html">Contact</a> • <a href="about.html">About</a>
+</footer>
+
+<!-- SMOOTH SCROLL JAVASCRIPT -->
+<script>
+  const lenis = new Lenis({
+    duration: 1.3,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
+    smoothTouch: true,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+</script>
+</body>
+</html>

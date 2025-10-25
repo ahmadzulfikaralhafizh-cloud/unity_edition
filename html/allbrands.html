@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Brands | UNITYEdition</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.37/dist/lenis.min.js"></script>
+
+<style>
+  :root {
+    --text: #f2f2f2;
+    --muted: #bfbfbf;
+    --glow: rgba(255,255,255,0.25);
+    --accent: #ffffff;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at center, #0d0d0d 0%, #050505 100%);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* Background Lighting Animation */
+  body::before {
+    content: "";
+    position: fixed;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.05), transparent 70%),
+                radial-gradient(circle at 70% 70%, rgba(255,255,255,0.05), transparent 70%);
+    animation: moveLight 10s ease-in-out infinite alternate;
+    z-index: -1;
+  }
+  @keyframes moveLight {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(-10%,10%) scale(1.2); }
+  }
+
+  /* Back Button */
+  .back-arrow {
+    position: fixed;
+    top: 30px; left: 30px;
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.08);
+    color: #fff; border: 1px solid rgba(255,255,255,0.2);
+    text-decoration: none; font-size: 20px;
+    transition: 0.3s ease;
+    z-index: 50;
+  }
+  .back-arrow:hover {
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 0 25px rgba(255,255,255,0.3);
+    transform: scale(1.1);
+  }
+
+  /* Hero Section */
+  .hero {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 3.4rem;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 0 25px rgba(255,255,255,0.2);
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+
+  /* Section Title */
+  .section-title {
+    text-align: center;
+    font-size: 2.4rem;
+    margin: 80px 0 60px;
+    position: relative;
+    color: #fff;
+  }
+  .section-title::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 3px;
+    background: #fff;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+  }
+
+  /* Brand Grid */
+  .brands {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px 120px;
+  }
+
+  .brand-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 40px;
+    justify-content: center;
+  }
+
+  .brand-card {
+    background: linear-gradient(145deg, #151515, #0a0a0a);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    padding: 50px 25px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s ease;
+    box-shadow: 0 0 0 rgba(255,255,255,0);
+  }
+
+  .brand-card::before {
+    content: "";
+    position: absolute;
+    top: -60%; left: -60%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .brand-card:hover::before {
+    opacity: 1;
+  }
+
+  .brand-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(255,255,255,0.1);
+  }
+
+  .brand-card h3 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  .brand-card p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* Fade-in animation */
+  [data-fade] {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+    transition: 1s cubic-bezier(0.2, 0.6, 0.4, 1);
+  }
+  [data-fade].visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  footer {
+    text-align: center;
+    color: #aaa;
+    padding: 60px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-arrow">←</a>
+
+<section class="hero">
+  <h1>Our Exclusive Brands</h1>
+  <p>UNITYEdition menampilkan koleksi merek mobil legendaris dunia — setiap nama adalah ikon kecepatan, kemewahan, dan inovasi.</p>
+</section>
+
+<section class="brands">
+  <h2 class="section-title">Top Speed Icons</h2>
+
+  <div class="brand-grid">
+    <div class="brand-card" data-fade><h3>Bugatti</h3><p>Perpaduan kekuatan ekstrem dan desain ikonik asal Prancis.</p></div>
+    <div class="brand-card" data-fade><h3>Pagani</h3><p>Keanggunan Italia yang dipadukan dengan performa aerodinamis tinggi.</p></div>
+    <div class="brand-card" data-fade><h3>Koenigsegg</h3><p>Supercar asal Swedia yang mendefinisikan ulang batas kecepatan.</p></div>
+    <div class="brand-card" data-fade><h3>Ferrari</h3><p>Simbol kecepatan, prestise, dan semangat balap Italia.</p></div>
+    <div class="brand-card" data-fade><h3>Mercedes</h3><p>Kemewahan Jerman dengan inovasi teknologi tanpa batas.</p></div>
+    <div class="brand-card" data-fade><h3>Ford</h3><p>Legenda Amerika dengan sejarah panjang di dunia otomotif.</p></div>
+    <div class="brand-card" data-fade><h3>Audi</h3><p>Presisi Jerman dengan desain modern dan performa elegan.</p></div>
+    <div class="brand-card" data-fade><h3>McLaren</h3><p>Perpaduan sains dan seni untuk menciptakan mobil tercepat dunia.</p></div>
+    <div class="brand-card" data-fade><h3>BMW</h3><p>“The Ultimate Driving Machine” — keseimbangan antara kekuatan dan kenyamanan.</p></div>
+    <div class="brand-card" data-fade><h3>Porsche</h3><p>Performa tinggi dan gaya abadi dari Stuttgart.</p></div>
+    <div class="brand-card" data-fade><h3>Aston Martin</h3><p>Elegan dan bertenaga — pilihan James Bond.</p></div>
+    <div class="brand-card" data-fade><h3>Bentley</h3><p>Kemewahan Inggris dengan kenyamanan kelas dunia.</p></div>
+  </div>
+</section>
+
+<footer>© 2025 UNITYEdition | <a href="careers.html">Careers</a> • <a href="contact.html">Contact</a> • <a href="about.html">About</a></footer>
+
+<script>
+  // Smooth scrolling
+  const lenis = new Lenis({
+    duration: 1.3,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
+  });
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  // Fade-in animation saat scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('[data-fade]').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

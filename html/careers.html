@@ -385,19 +385,22 @@
 
 <!-- SMOOTH SCROLL JAVASCRIPT -->
 <script>
+  // Smooth scrolling
   const lenis = new Lenis({
     duration: 1.3,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smooth: true,
-    smoothTouch: true,
   });
-
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
+
+  // Fade-in animation saat scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('[data-fade]').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
